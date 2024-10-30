@@ -1,28 +1,27 @@
 <!-- resources/views/groq/index.blade.php -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groq API</title>
-</head>
-<body>
-    <form action="{{ route('groq.generate') }}" method="POST">
-        @csrf
-        <label for="input_data">Input Data:</label>
-        <textarea name="input_data" id="input_data" required></textarea>
-        <button type="submit">Generate</button>
-    </form>
+@extends('layouts.app') <!-- Menggunakan layout app.blade.php -->
 
-    @if($errors->any())
-        <div>
-            <strong>Error:</strong>
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-</body>
-</html>
+@section('title', 'Groq AI') <!-- Mengatur title halaman -->
+
+@section('content') <!-- Konten spesifik untuk halaman ini -->
+    <div class="container">
+        <h1>Tanya Groq AI</h1>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @include('partials.form') <!-- Memasukkan partial form -->
+
+        @if (isset($resultMessage))
+            <h2>Hasil dari Groq AI</h2>
+            <p id="resultMessage">{{ $resultMessage }}</p>
+        @endif
+    </div>
+@endsection
